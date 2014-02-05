@@ -54,6 +54,7 @@ module GeoIP
       @db ||= GeoIP.db_open(@filename, 0)
       raise "Failed opening #{@filename}" if @db.null?
       record = GeoIP.record_by_addr(@db, ip)
+      return nil if record.null?
       result = GeoIP::Record.new(record).to_hash
       GeoIP.record_free(record)
       result
